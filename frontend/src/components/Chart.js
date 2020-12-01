@@ -85,6 +85,7 @@ const data = [
   createData('00:73', -0.143),
   createData('00:74', -0.145),
   createData('00:75', -0.145),
+  
 ];
 const heartbeats = ["00:09", "00:28", "00:47", "00:66"];
 const annotations = ['N', 'N', 'B', 'N'];
@@ -122,7 +123,7 @@ export default function Chart() {
           <CartesianGrid strokeDasharray="3 3" />
           {createAnnotations().props.children}
           <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
-          <YAxis stroke={theme.palette.text.secondary}>
+          <YAxis type="number" stroke={theme.palette.text.secondary} domain={[-0.2, -0.1]}>
             <Label
               angle={270}
               position="left"
@@ -132,7 +133,7 @@ export default function Chart() {
             </Label>
           </YAxis>
           <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />
-          <Brush dataKey='time' height={15} stroke="#8884d8"/>
+          <Brush dataKey='time' height={15} stroke="#8884d8" endIndex={30} />
         </LineChart>
       </ResponsiveContainer>
     </React.Fragment>

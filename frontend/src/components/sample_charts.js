@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chart from './Chart';
+import Chart2 from './Chart2';
 import PatientTable from './Patient';
 import {CreateUser} from './Users';
 import Title from './Title';
@@ -71,7 +72,7 @@ export default function Sample() {
               <Divider />
               <Paper className={fixedHeightPaper}>
                 <Title>V1</Title>
-                <Chart />
+                <Chart2 />
               </Paper>
             </Grid>
           </Grid>
