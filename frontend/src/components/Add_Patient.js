@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BasicSelect() {
+export default function AddPatient() {
   const classes = useStyles();
   const [state, setState] = useState({
     fname: "",

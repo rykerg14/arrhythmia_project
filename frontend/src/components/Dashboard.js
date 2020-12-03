@@ -15,7 +15,7 @@ import Sample from './sample_charts';
 import MainList from './MainList';
 import PropTypes from 'prop-types';
 import PatientTable from "./Patient";
-import BasicSelect from "./Add_Patient";
+import AddPatient from "./Add_Patient";
 
 
 function Copyright() {
@@ -141,7 +141,7 @@ class Dashboard extends React.Component {
     } else if (listIndex === 1) {
       centerComponent = <PatientTable />
     } else if (listIndex == 2) {
-      centerComponent = <BasicSelect />
+      centerComponent = <AddPatient />
     }
     return (
       <div className={classes.root}>

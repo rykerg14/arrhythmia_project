@@ -20,7 +20,11 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData('100', '69', 'Male', '30:06', '2273')
+  createData('100', '69', 'Male', '30:06', '2273'),
+  createData('101', '75', 'Female', '30:05', '1874'),
+  createData('102', '84', 'Female', '30:05', '2192'),
+  createData('103', '-1', 'Male', '30:05', '2091'),
+  createData('104', '66', 'Female', '30:05', '2311')
 ];
 
 export default function PatientTable() {
