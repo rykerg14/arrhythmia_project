@@ -11,9 +11,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,8 +26,10 @@ SECRET_KEY = 'o^c7k%ovo3#_$0jf80qsfq!+9e$m=muh5&y%ekg+rm)4h(*9hd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', 'http://localhost:3000']
+CORS_ALLOW_HEADERS = ('multipart/form-data')
 
+CORS_ORIGIN_ALLOW_ALL = False
 
 # Application definition
 
@@ -37,9 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'patientdb',
+    'debug_toolbar',
+    'django_filters',
     'corsheaders',
-    'graphene_django',
-    'patientdb'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'mainapp.urls'
@@ -81,10 +87,10 @@ WSGI_APPLICATION = 'mainapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'projectdb',
+        'NAME': 'patient_db',
         'USER': 'postgres',
-        'PASSWORD': 'jackjones',
-        'HOST': 'database-1.c7f0jvnuk17j.us-east-1.rds.amazonaws.com',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
         'PORT': '5432',
      }
 }
@@ -128,13 +134,45 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-GRAPHENE = {
-    'SCHEMA' : 'mainapp.schema.schema',
-    'RELAY_CONNECTION_MAX_LIMIT': 2000,
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 21600
 }
+
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
-    "http://127.0.0.1:3000"
+    "http://localhost:8000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:8000"
+
     # your React App domain]
 ]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+DEBUG_TOOLBAR_PANELS = [
+        'debug_toolbar.panels.versions.VersionsPanel',
+        'debug_toolbar.panels.timer.TimerPanel',
+        'debug_toolbar.panels.settings.SettingsPanel',
+        'debug_toolbar.panels.headers.HeadersPanel',
+        'debug_toolbar.panels.request.RequestPanel',
+        'debug_toolbar.panels.sql.SQLPanel',
+        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+        'debug_toolbar.panels.templates.TemplatesPanel',
+        'debug_toolbar.panels.cache.CachePanel',
+        'debug_toolbar.panels.signals.SignalsPanel',
+        'debug_toolbar.panels.logging.LoggingPanel',
+        'debug_toolbar.panels.redirects.RedirectsPanel',
+    ]
+
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
+STATIC_URL = '/static/'
+
+
+ROOT_URLCONF = 'mainapp.urls'

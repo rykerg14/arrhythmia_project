@@ -1,13 +1,13 @@
-import React from 'react';
-import Title from './Title';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import React from "react";
+import Title from "./Title";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles({
   table: {
@@ -19,15 +19,7 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData('100', '69', 'Male', '30:06', '2273'),
-  createData('101', '75', 'Female', '30:05', '1874'),
-  createData('102', '84', 'Female', '30:05', '2192'),
-  createData('103', '-1', 'Male', '30:05', '2091'),
-  createData('104', '66', 'Female', '30:05', '2311')
-];
-
-export default function PatientTable() {
+export default function PatientTable(props) {
   const classes = useStyles();
 
   return (
@@ -38,22 +30,33 @@ export default function PatientTable() {
             <TableCell>Patient Record No.</TableCell>
             <TableCell align="right">Age</TableCell>
             <TableCell align="right">Gender</TableCell>
-            <TableCell align="right">Record Length</TableCell>
-            <TableCell align="right">Total Annotations</TableCell>
+            <TableCell align="right">Number Signal Data Points</TableCell>
+            <TableCell align="right">Record Types</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
+          <TableRow key={props.patientID}>
+            <TableCell component="th" scope="row">
+              {props.patientID}
+            </TableCell>
+
+            {/* MIT database might not record age, saved as -1 in db*/}
+            <TableCell align="right">
+              {props.patient[0] === "-1"
+                ? "Age Not Recorded"
+                : props.patient[0]}
+            </TableCell>
+            {
+            /* Database identify gender from comment with M being Male, 
+             * F = female. MIT DB definitely identifies gender
+             */
+            }
+            <TableCell align="right">
+              {props.patient[1] === "M" ? "Male" : "Female"}
+            </TableCell>
+            <TableCell align="right">{props.patient[2]}</TableCell>
+            <TableCell align="right">{props.patient[3]}</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
