@@ -6,9 +6,8 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import PatientTable from "./Patient";
-import Title from "./Title";
 import { useLazyQuery } from "@apollo/client";
-import Chart2 from "./Chart2";
+import Chart from "./Chart";
 import { Button, MenuItem, Select } from "@material-ui/core";
 import {
   signalQuery,
@@ -21,7 +20,6 @@ import Typography from "@material-ui/core/Typography";
 
 // Generate pairs of timestamps and readings
 function createData(time, amount) {
-  //return { time, amount };
   return { x: time, y: amount };
 }
 
@@ -80,7 +78,7 @@ export default function Sample() {
 
   // Data State
   const [dataPoint, setDataPoint] = useState({});
-  const [predictedAnnotation, setPredictedAnnotation] = useState({});
+  //const [predictedAnnotation, setPredictedAnnotation] = useState({});
 
   // Selection states
   const [displayPatientNumber, setDisplayPatientNumber] = useState("");
@@ -99,11 +97,6 @@ export default function Sample() {
   const [end, setEnd] = useState("60");
   const [jumpStart, setJumpStart] = useState("0");
   const [jumpEnd, setJumpEnd] = useState("60");
-
-
-  // Styling
-  const [mlData, setMlData] = useState(0);
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   // State that handles queries for signals
   // TODO: Make it dynamic responsive from the user
@@ -174,8 +167,6 @@ export default function Sample() {
     let mliiFoundAnnotations = [];
     let v5FoundAnnotations = [];
     let i = 0;
-    //setStart(signals[0].time);
-    //setEnd(Math.ceil(signals[signals.length - 1].time));
     for (i; i < signals.length; i++) {
       MLIIdatapoints.push(createData(signals[i].time, signals[i].mlii));
       V5datapoints.push(createData(signals[i].time, signals[i].v5));
@@ -206,8 +197,6 @@ export default function Sample() {
     let startTime = start;
     let endTime = end;
     if (!start && !end) {
-      // setStart(signals[0].time);
-      // setEnd(Math.ceil(signals[signals.length - 1].time));
       startTime = signals[0].time;
       endTime = Math.ceil(signals[signals.length - 1].time);
     }
@@ -266,16 +255,6 @@ export default function Sample() {
     setJumpEnd(event.target.value);
   };
 
-  //did mount or updated
-
-  //const [next, setNext] = useState(0);
-
-  // handleStartChange => (event) => {
-  //     setStart(event.value)
-  // }
-  // handleEndChange => (event) => {
-  //   setStart(event.value)
-
   // Render Display Component
   if (!calledSig) {
     // Startup, select patient
@@ -328,7 +307,6 @@ export default function Sample() {
       ML2predictData,
       V5predictData
     );
-    // let predictions = predictedAnnotation;
 
     /* Processing patient data */
     const patientComment = patientLists.patients.results.find(
@@ -403,12 +381,7 @@ export default function Sample() {
             <Grid item xs={12} md={10} lg={12}>
               <Paper>
                 <Typography variant="h4">ML II</Typography>
-                {/* <form onSubmit={handleJumpSubmit}>
-              
-              <input label="Start" onChange={setStart(this.value)}></input>
-              <
-            </form> */}
-                <Chart2
+                <Chart
                   key={1}
                   data={signals.ml2}
                   predictions={predictions.ml2}
@@ -463,7 +436,7 @@ export default function Sample() {
               <Divider />
               <Paper>
                 <Typography variant="h4">V5</Typography>
-                <Chart2
+                <Chart
                   key={2}
                   data={signals.v5}
                   predictions={predictions.v5}

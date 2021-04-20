@@ -133,7 +133,6 @@ class Dashboard extends React.Component {
   render() {
     const { classes } = this.state.classes;
     const listIndex = this.state.listIndex;
-    // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     // Conditionally render center app depending on main list choice
     let centerComponent = null;
     if (listIndex === 0) {
